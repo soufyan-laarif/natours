@@ -6,10 +6,15 @@ const userRouter = require('./routes/userRoutes');
 const app = express();
 
 // MIDDLEWARES
-app.use(express.json()); // express.json() -> Middleware
 
+app.use(express.json()); // express.json() -> Middleware
 // morgan : 3rd-party middleware --> HTTP request logger middleware
-app.use(morgan('dev'));
+// console.log(process.env.NODE_ENV);
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
+// Serving static files from public folder
+app.use(express.static(`${__dirname}/public`));
 
 // Custom middleware
 app.use((req, res, next) => {
